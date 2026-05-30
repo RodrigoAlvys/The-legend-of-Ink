@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-const WALK_SPEED = 200.0
-const RUN_SPEED = 350.0
+const WALK_SPEED = 250.0
+const RUN_SPEED = 500.0
 
 func _physics_process(delta):
 	var direction = Input.get_vector(
