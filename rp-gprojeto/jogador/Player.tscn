@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://gc8ppb38pjih"]
+
+[ext_resource type="Script" uid="uid://donlebujuj1n2" path="res://jogador/character_body_2d.gd" id="1_kpjcp"]
+[ext_resource type="Texture2D" uid="uid://ulaaj8t5mqlt" path="res://arte/sprites/ink.png" id="2_kne1u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdubu"]
+size = Vector2(64, 64)
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1566683655]
+collision_layer = 2
+script = ExtResource("1_kpjcp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1132727732]
+position = Vector2(39, -33)
+shape = SubResource("RectangleShape2D_kdubu")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=723194389]
+position = Vector2(38.000004, -60.999996)
+scale = Vector2(0.609375, 0.60156244)
+texture = ExtResource("2_kne1u")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1427208974]
+position = Vector2(39, -33)
