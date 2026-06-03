@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kdubu"]
 size = Vector2(64, 64)
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1566683655]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1566683655 groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_kpjcp")
 

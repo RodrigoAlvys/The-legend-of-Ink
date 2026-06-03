@@ -11,13 +11,19 @@ config_version=5
 [application]
 
 config/name="RPGprojeto"
-run/main_scene="uid://12u5xxm3lnb0"
+run/main_scene="uid://cxuicy3enaswt"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Game="*uid://db6ftun4vjjx4"
+Fade="*uid://nkjlryotnf8r"
+
+[global_group]
+
+player=""
+spawn_points=""
 
 [layer_names]
 
