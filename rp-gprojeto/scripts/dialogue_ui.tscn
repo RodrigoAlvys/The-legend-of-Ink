@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cwtquivv6j7lr"]
+
+[ext_resource type="Script" uid="uid://cromnfb3j1wvr" path="res://scripts/dialogue_ui.gd" id="1_4gq21"]
+[ext_resource type="Texture2D" uid="uid://dxtaung7vcwg7" path="res://arte/dialogo.png" id="1_p2yfj"]
+[ext_resource type="FontFile" uid="uid://bvixdee3wdvo5" path="res://font/VCR_OSD_MONO_1.001.ttf" id="3_pvehy"]
+
+[node name="DialogueUI" type="CanvasLayer" unique_id=196424468 groups=["dialogue_ui"]]
+script = ExtResource("1_4gq21")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2006033589]
+offset_left = 40.0
+offset_top = 400.0
+offset_right = 1240.0
+offset_bottom = 700.0
+texture = ExtResource("1_p2yfj")
+
+[node name="Dialogo" type="Label" parent="." unique_id=762312695]
+offset_left = 80.0
+offset_top = 440.0
+offset_right = 1200.0
+offset_bottom = 660.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_pvehy")
+theme_override_font_sizes/font_size = 40
+text = "Texto"
+autowrap_mode = 2
