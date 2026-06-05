@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://gc8ppb38pjih"]
 
-[ext_resource type="Script" uid="uid://donlebujuj1n2" path="res://jogador/character_body_2d.gd" id="1_kpjcp"]
+[ext_resource type="Script" uid="uid://donlebujuj1n2" path="res://jogador/Controles.gd" id="1_kpjcp"]
 [ext_resource type="Texture2D" uid="uid://ulaaj8t5mqlt" path="res://arte/sprites/ink.png" id="2_kne1u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kdubu"]
