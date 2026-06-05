@@ -9,7 +9,10 @@
 [ext_resource type="Script" uid="uid://280v1hyrsc86" path="res://mapas/vermelho.gd" id="6_t6otu"]
 [ext_resource type="Texture2D" uid="uid://qegp1ksdg731" path="res://arte/sprites/cinza.png" id="7_t6otu"]
 [ext_resource type="Texture2D" uid="uid://bm4srdtrlyofj" path="res://arte/sprites/azul.png" id="8_aeyf8"]
+[ext_resource type="Script" uid="uid://bslo1xeygjruo" path="res://mapas/cinza.gd" id="8_ja3h8"]
 [ext_resource type="Texture2D" uid="uid://cpqhd4ach2g66" path="res://arte/sprites/verde.png" id="9_yogvm"]
+[ext_resource type="Script" uid="uid://4wg8p55mt4wg" path="res://mapas/azul.gd" id="10_lprg1"]
+[ext_resource type="Script" uid="uid://0my160lmch4w" path="res://mapas/verde.gd" id="12_j7so3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wktb5"]
 texture = ExtResource("1_hlfx6")
@@ -136,6 +139,8 @@ shape = SubResource("RectangleShape2D_5fbls")
 
 [node name="Cinza" type="CharacterBody2D" parent="Entidades" unique_id=586501087]
 position = Vector2(200, 1000)
+collision_layer = 9
+script = ExtResource("8_ja3h8")
 
 [node name="Sprite2D" type="Sprite2D" parent="Entidades/Cinza" unique_id=63692173]
 position = Vector2(0, -25)
@@ -150,6 +155,8 @@ shape = SubResource("RectangleShape2D_5fbls")
 
 [node name="Azul" type="CharacterBody2D" parent="Entidades" unique_id=616731106]
 position = Vector2(1000, 4100)
+collision_layer = 9
+script = ExtResource("10_lprg1")
 
 [node name="Sprite2D" type="Sprite2D" parent="Entidades/Azul" unique_id=728710992]
 position = Vector2(0, -25)
@@ -164,6 +171,8 @@ shape = SubResource("RectangleShape2D_5fbls")
 
 [node name="Verde" type="CharacterBody2D" parent="Entidades" unique_id=1283431968]
 position = Vector2(-500, 1100)
+collision_layer = 9
+script = ExtResource("12_j7so3")
 
 [node name="Sprite2D" type="Sprite2D" parent="Entidades/Verde" unique_id=2534703]
 position = Vector2(0, -25)

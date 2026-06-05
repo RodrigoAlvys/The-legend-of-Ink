@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dotk4iuvqhbqu" path="res://mapas/portas.gd" id="4_4iet1"]
 [ext_resource type="Script" uid="uid://dxjwaun3d2qp0" path="res://mapas/mapamarker.gd" id="5_8xejp"]
 [ext_resource type="Texture2D" uid="uid://caop3mfnw8o2u" path="res://arte/sprites/roxo.png" id="6_12toi"]
+[ext_resource type="Script" uid="uid://dt7wi5mflfd0e" path="res://mapas/roxo.gd" id="6_dvs42"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2k3q6"]
 texture = ExtResource("1_7pacf")
@@ -76,6 +77,8 @@ position = Vector2(0, 1)
 
 [node name="Roxo" type="CharacterBody2D" parent="Entidades" unique_id=1025481110]
 position = Vector2(939, 5)
+collision_layer = 9
+script = ExtResource("6_dvs42")
 
 [node name="Sprite2D" type="Sprite2D" parent="Entidades/Roxo" unique_id=553023362]
 position = Vector2(0, -25)

@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://gc8ppb38pjih" path="res://jogador/Player.tscn" id="2_txu65"]
 [ext_resource type="Script" uid="uid://dotk4iuvqhbqu" path="res://mapas/portas.gd" id="4_8tlp6"]
 [ext_resource type="Script" uid="uid://dxjwaun3d2qp0" path="res://mapas/mapamarker.gd" id="5_8tlp6"]
+[ext_resource type="Script" uid="uid://bvvq11dn7ycii" path="res://mapas/laranja.gd" id="6_154gr"]
 [ext_resource type="Texture2D" uid="uid://dlcdc21f5aosx" path="res://arte/sprites/laranja.png" id="6_wsvxn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_12j2a"]
@@ -95,6 +96,8 @@ position = Vector2(665, 37)
 
 [node name="Laranja" type="CharacterBody2D" parent="Entidades" unique_id=2057744027]
 position = Vector2(458, 5)
+collision_layer = 9
+script = ExtResource("6_154gr")
 
 [node name="Sprite2D" type="Sprite2D" parent="Entidades/Laranja" unique_id=1925617461]
 position = Vector2(0, -25)
