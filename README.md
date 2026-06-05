@@ -40,7 +40,7 @@ O jogo também prevê pathfinding em mapa tile para movimentação de personagen
 ## Tecnologias previstas
 
 - Godot Engine
-- Python3.9+
+- GDScript
 - JSON
 - SQLite
 
