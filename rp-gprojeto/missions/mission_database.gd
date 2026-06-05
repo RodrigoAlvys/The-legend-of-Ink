@@ -31,8 +31,8 @@ static func _despertar() -> Mission:
 			"fim": false,
 		},
 		"saida": {
-			"descricao": "Uma fenda na parede deixa passar u fio de luz.",
-			"objetivo": "mAtravesse a fenda.",
+			"descricao": "Uma fenda na parede deixa passar um fio de luz.",
+			"objetivo": "Atravesse a fenda.",
 			"escolhas": [ {"texto": "Atravessar", "proximo": "fim"} ],
 			"fim": false,
 		},
