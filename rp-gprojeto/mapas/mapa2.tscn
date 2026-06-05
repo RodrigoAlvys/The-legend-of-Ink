@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://qegp1ksdg731" path="res://arte/sprites/cinza.png" id="7_t6otu"]
 [ext_resource type="Texture2D" uid="uid://bm4srdtrlyofj" path="res://arte/sprites/azul.png" id="8_aeyf8"]
 [ext_resource type="Texture2D" uid="uid://cpqhd4ach2g66" path="res://arte/sprites/verde.png" id="9_yogvm"]
+[ext_resource type="PackedScene" path="res://inventory/DroppedItem.tscn" id="10_item"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wktb5"]
 texture = ExtResource("1_hlfx6")
@@ -171,3 +172,8 @@ texture = ExtResource("9_yogvm")
 light_mask = 0
 visibility_layer = 9
 shape = SubResource("RectangleShape2D_5fbls")
+
+[node name="ItemNoChao" parent="." instance=ExtResource("10_item")]
+position = Vector2(110, 0)
+item_id = "potion_l"
+quantidade = 2
