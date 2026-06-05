@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dotk4iuvqhbqu" path="res://mapas/portas.gd" id="4_o010f"]
 [ext_resource type="Script" uid="uid://dxjwaun3d2qp0" path="res://mapas/mapamarker.gd" id="5_5fbls"]
 [ext_resource type="Texture2D" uid="uid://cj6rcqbumlon8" path="res://arte/sprites/vermelho.png" id="6_e2svy"]
+[ext_resource type="Script" uid="uid://280v1hyrsc86" path="res://mapas/vermelho.gd" id="6_t6otu"]
 [ext_resource type="Texture2D" uid="uid://qegp1ksdg731" path="res://arte/sprites/cinza.png" id="7_t6otu"]
 [ext_resource type="Texture2D" uid="uid://bm4srdtrlyofj" path="res://arte/sprites/azul.png" id="8_aeyf8"]
 [ext_resource type="Texture2D" uid="uid://cpqhd4ach2g66" path="res://arte/sprites/verde.png" id="9_yogvm"]
@@ -119,6 +120,8 @@ position = Vector2(-1, 0)
 
 [node name="Vermelho" type="CharacterBody2D" parent="Entidades" unique_id=1029568367]
 position = Vector2(200, 5)
+collision_layer = 9
+script = ExtResource("6_t6otu")
 
 [node name="Sprite2D" type="Sprite2D" parent="Entidades/Vermelho" unique_id=1084230909]
 position = Vector2(0, -25)
