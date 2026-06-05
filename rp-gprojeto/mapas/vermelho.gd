@@ -1,6 +1,10 @@
 extends CharacterBody2D
 
 func interact():
+	# inicia a missão "A Gosma Misteriosa" ao conversar com o vermelho.
+	# iniciar() é idempotente: se a missão já começou, não faz nada.
+	if Game.missions != null:
+		Game.missions.iniciar("gosma")
 	DialogueUI.start_dialogue([
 		"Você derrotou o slime de tinta na caverna? Eu estava prestes a fazer isso.",
 		"Encontrou Roxo lá dentro? Ele devia estar em algum lugar por lá...",
