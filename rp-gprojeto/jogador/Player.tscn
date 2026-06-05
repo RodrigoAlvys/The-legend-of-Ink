@@ -16,8 +16,12 @@ shape = SubResource("RectangleShape2D_kdubu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=723194389]
 position = Vector2(38.000004, -60.999996)
-scale = Vector2(0.609375, 0.60156244)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_kne1u")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1427208974]
 position = Vector2(39, -33)
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=726319776]
+position = Vector2(39, -32)
+collision_mask = 8
