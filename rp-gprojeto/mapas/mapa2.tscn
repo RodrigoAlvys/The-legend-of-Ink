@@ -115,6 +115,7 @@ script = ExtResource("5_5fbls")
 spawn_id = &"EntradaMapa4"
 
 [node name="Entidades" type="Node2D" parent="." unique_id=247407490]
+z_index = 10
 y_sort_enabled = true
 position = Vector2(1, 0)
 
