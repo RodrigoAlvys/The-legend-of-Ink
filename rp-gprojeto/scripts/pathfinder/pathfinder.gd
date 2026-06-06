@@ -30,6 +30,12 @@ func _ready() -> void:
 	if not _conf_grid(_layer_mask):
 		print("Error ao configurar grid!")
 		return
+	if pontos_interesse.is_empty():
+		return
+	
+	_pre_calc_distancias()
+	_inic_rota()
+	_configurar_timer()
 
 func _conf_grid(layer_mask: int) -> bool:
 	var rect = tilemap.get_used_rect()
@@ -88,24 +94,24 @@ func _heuristica_octogonal(pos:Vector2i, goal:Vector2i) -> int:
 func _pode_diagonal(de:Vector2i, para:Vector2i) -> bool:
 	var dx:int = para.x - de.x
 	var dy:int = para.y - de.y
-	if abs(dx) != 1 and abs(dy) != 1:
+	if abs(dx) != 1 or abs(dy) != 1:
 		return true
 	var passo_horizontal: Vector2i = Vector2i(de.x + dx, de.y)
 	var passo_vertical: Vector2i = Vector2i(de.x, de.y + dy)
-	return _is_navegavel(passo_horizontal) or _is_navegavel(passo_vertical)
+	return _is_navegavel(passo_horizontal) and _is_navegavel(passo_vertical)
 
 func _vizinhos(pos:Vector2i) -> Array[Vector2i]:
 	var vizinhos:Array[Vector2i] = []
-	for y in range(-1, 2):
-		for x in range(-1, 2):
-			if y==0 and x==0:
+	for dx in range(-1, 2):
+		for dy in range(-1, 2):
+			if dx==0 and dy==0:
 				continue
-			var viz = pos + Vector2i(x, y)
+			var viz = Vector2i(pos.x +dx, pos.y + dy)
 			if viz.y<0 or viz.y>=_grid_size_y or viz.x<0 or viz.x>=_grid_size_x:
 				continue
 			if not _is_navegavel(viz):
 				continue
-			if abs(y)==1 and abs(x)==1:
+			if abs(dx)==1 and abs(dy)==1:
 				if not _pode_diagonal(pos, viz):
 					continue
 			vizinhos.append(viz)
@@ -152,10 +158,10 @@ func a_star_manual(inic_mundo:Vector2, fim_mundo:Vector2) -> Array[Vector2]:
 		for i in range(open.size()):
 			if open[i].f() < atual.f():
 				atual = open[i]
-				idx_atual = 1
+				idx_atual = i
 			elif open[i].f() == atual.f() and open[i].h < atual.h:
 				atual = open[i]
-				idx_atual = 1
+				idx_atual = i
 		open.remove_at(idx_atual)
 		if atual.pos == fim:
 			return _reconstruir_path(atual)
@@ -211,8 +217,10 @@ func _pre_calc_distancias() -> void:
 func _algorit_guloso() -> Array[int]:
 	var n:int = pontos_interesse.size()
 	if n <= 1:
-		return range(n)
-	var nao_visitados:Array[int] = range(n)
+		return [0] if n == 1 else []
+	var nao_visitados:Array[int] = []
+	for i in range(n):
+		nao_visitados.append(i)
 	var ordem:Array[int] = []
 	var atual:int = 0
 	
@@ -259,4 +267,71 @@ func _inic_rota() -> void:
 	_pontos_restantes = ordem.slice(1)
 	_caminho_atual = _gerar_caminho_completo(ordem)
 	_indice_caminho = 0
-	_visu
+	_visualizar_caminho(_caminho_atual)
+	
+func _visualizar_caminho(caminho:Array[Vector2]) -> void:
+	if line:
+		line.clear_points()
+		for ponto in caminho:
+			line.add_point(ponto)
+	for child in get_children():
+		if child is Marker2D:
+			child.queue_free()
+	for i in range(pontos_interesse.size()):
+		var marker: Marker2D = Marker2D.new()
+		marker.position = pontos_interesse[i]
+		var label:Label = Label.new()
+		label.text = str(i)
+		label.add_theme_color_override("font_color", Color.WHITE)
+		label.position = Vector2(-5, -15)
+		marker.add_child(label)
+		add_child(marker)
+
+func _recalcular_rota_apartir(pos_jogador: Vector2) -> void:
+	var idx_mais_proximo: int = _encontrar_ponto_mais_proximo(pos_jogador)
+	
+	var novos_restantes: Array[int] = []
+	for i in _pontos_restantes:
+		if i != idx_mais_proximo:
+			novos_restantes.append(i)
+	
+	var nova_ordem: Array[int] = [idx_mais_proximo]
+	var atual: int = idx_mais_proximo
+	
+	while novos_restantes.size() > 0:
+		var melhor: int = novos_restantes[0]
+		var menor_dist: int = _distant_entre_pontos(atual, melhor)
+		for candidato in novos_restantes:
+			var dist: int = _distant_entre_pontos(atual, candidato)
+			if dist < menor_dist:
+				menor_dist = dist
+				melhor = candidato
+		nova_ordem.append(melhor)
+		novos_restantes.erase(melhor)
+		atual = melhor
+	
+	var novo_caminho: Array[Vector2] = a_star_manual(pos_jogador, pontos_interesse[idx_mais_proximo])
+	for i in range(nova_ordem.size() - 1):
+		var seg: Array[Vector2] = a_star_manual(pontos_interesse[nova_ordem[i]], pontos_interesse[nova_ordem[i + 1]])
+		if seg.size() > 0:
+			if novo_caminho.size() > 0:
+				novo_caminho.pop_back()
+			novo_caminho.append_array(seg)
+	
+	_caminho_atual = novo_caminho
+	_indice_caminho = 0
+	_pontos_restantes = nova_ordem.slice(1)
+	_visualizar_caminho(_caminho_atual)
+
+func _verificar_recalculo() -> void:
+	if not _guest_on or not player:
+		return
+	if _indice_caminho < _caminho_atual.size():
+		var distancia:float = player.global_position.distance_to(_caminho_atual[_indice_caminho])
+		if distancia > 100.0:
+			_recalcular_rota_apartir(player.global_position)
+func _configurar_timer() -> void:
+	if timer:
+		timer.wait_time = 0.5
+		timer.timeout.connect(_verificar_recalculo)
+		timer.start()
