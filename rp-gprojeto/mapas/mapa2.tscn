@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bm4srdtrlyofj" path="res://arte/sprites/azul.png" id="8_aeyf8"]
 [ext_resource type="Script" uid="uid://bslo1xeygjruo" path="res://mapas/cinza.gd" id="8_ja3h8"]
 [ext_resource type="Texture2D" uid="uid://cpqhd4ach2g66" path="res://arte/sprites/verde.png" id="9_yogvm"]
+[ext_resource type="PackedScene" path="res://inventory/DroppedItem.tscn" id="10_item"]
 [ext_resource type="Script" uid="uid://4wg8p55mt4wg" path="res://mapas/azul.gd" id="10_lprg1"]
 [ext_resource type="Script" uid="uid://0my160lmch4w" path="res://mapas/verde.gd" id="12_j7so3"]
 
@@ -184,3 +185,8 @@ texture = ExtResource("9_yogvm")
 light_mask = 0
 visibility_layer = 9
 shape = SubResource("RectangleShape2D_5fbls")
+
+[node name="ItemNoChao" parent="Entidades" instance=ExtResource("10_item")]
+position = Vector2(109, 0)
+item_id = "potion_l"
+quantidade = 2
