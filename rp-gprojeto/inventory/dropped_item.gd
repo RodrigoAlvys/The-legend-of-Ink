@@ -53,8 +53,9 @@ func _coletar() -> void:
 	Game.notify("Coletado: %s%s" % [item.name, qtd_txt])
 	queue_free()   # some do mapa após a coleta
 
-# cabe se já existe pilha do mesmo item (empilhável) ou se há slot livre
+# cabe se já existe pilha do mesmo item (empilhável) ou se há slots livres
 func _tem_espaco(item: Item) -> bool:
-	if item.stackable and Game.inventory.has_item(item):
-		return true
-	return Game.inventory.slots.size() < Inventory.MAX_SLOTS
+	if item.stackable:
+		return Game.inventory.has_item(item) or Game.inventory.slots.size() < Inventory.MAX_SLOTS
+	var slots_livres := Inventory.MAX_SLOTS - Game.inventory.slots.size()
+	return slots_livres >= quantidade
