@@ -186,7 +186,7 @@ light_mask = 0
 visibility_layer = 9
 shape = SubResource("RectangleShape2D_5fbls")
 
-[node name="ItemNoChao" parent="." instance=ExtResource("10_item")]
-position = Vector2(110, 0)
+[node name="ItemNoChao" parent="Entidades" instance=ExtResource("10_item")]
+position = Vector2(109, 0)
 item_id = "potion_l"
 quantidade = 2

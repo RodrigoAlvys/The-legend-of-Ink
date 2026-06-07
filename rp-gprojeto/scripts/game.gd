@@ -64,5 +64,10 @@ func _on_item_dropped(item: Item, count: int) -> void:
 	var chao := DROPPED_ITEM.instantiate()
 	chao.item_id = item.id
 	chao.quantidade = count
-	cena.add_child(chao)
+	# coloca dentro do nó "Entidades" (que tem y_sort) pra renderizar na
+	# profundidade certa junto com os personagens; se não houver, cai no raiz
+	var pai: Node = cena.find_child("Entidades", true, false)
+	if pai == null:
+		pai = cena
+	pai.add_child(chao)
 	chao.global_position = player.global_position
