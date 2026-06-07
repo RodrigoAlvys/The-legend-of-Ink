@@ -159,6 +159,7 @@ collision_mask = 2
 script = ExtResource("4_4iet1")
 destino_mapa = "res://mapas/mapa2.tscn"
 spawn_id_saida = &"EntradaMapa1"
+missao_id = "despertar"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PortaParaMapa2" unique_id=953322088]
 position = Vector2(-838.5, 1267)
