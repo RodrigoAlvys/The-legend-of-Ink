@@ -19,11 +19,21 @@ config/icon="uid://buepp47nusabb"
 
 Game="*uid://db6ftun4vjjx4"
 Fade="*uid://nkjlryotnf8r"
+DialogueUI="*uid://cwtquivv6j7lr"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/resizable=false
+window/size/borderless=true
+window/stretch/mode="canvas_items"
 
 [global_group]
 
 player=""
 spawn_points=""
+dialogue_ui=""
 
 [input]
 

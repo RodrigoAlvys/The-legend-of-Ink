@@ -7,7 +7,14 @@ var facing_direction = Vector2.DOWN
 
 @onready var raycast = $RayCast2D
 
+
 func _physics_process(delta):
+
+	if DialogueUI.is_active():
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
+
 	var direction = Input.get_vector(
 		"ui_left",
 		"ui_right",
@@ -26,14 +33,20 @@ func _physics_process(delta):
 	velocity = direction * speed
 	move_and_slide()
 
-	# Mantém o RayCast apontando para frente
 	raycast.target_position = facing_direction * 64
 
 
 func _input(event):
 	if event.is_action_pressed("interact"):
+
+		if DialogueUI.is_active():
+			DialogueUI.next()
+			return
+
+		raycast.force_raycast_update()
+
 		if raycast.is_colliding():
 			var obj = raycast.get_collider()
 
-			if obj.has_method("interact"):
+			if obj and obj.has_method("interact"):
 				obj.interact()
