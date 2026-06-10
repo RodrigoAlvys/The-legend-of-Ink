@@ -6,13 +6,14 @@
 [ext_resource type="Script" uid="uid://dotk4iuvqhbqu" path="res://mapas/portas.gd" id="4_o010f"]
 [ext_resource type="Script" uid="uid://dxjwaun3d2qp0" path="res://mapas/mapamarker.gd" id="5_5fbls"]
 [ext_resource type="Texture2D" uid="uid://cj6rcqbumlon8" path="res://arte/sprites/vermelho.png" id="6_e2svy"]
-[ext_resource type="Script" uid="uid://280v1hyrsc86" path="res://mapas/vermelho.gd" id="6_t6otu"]
+[ext_resource type="Script" uid="uid://280v1hyrsc86" path="res://npcs/vermelho.gd" id="6_t6otu"]
 [ext_resource type="Texture2D" uid="uid://qegp1ksdg731" path="res://arte/sprites/cinza.png" id="7_t6otu"]
 [ext_resource type="Texture2D" uid="uid://bm4srdtrlyofj" path="res://arte/sprites/azul.png" id="8_aeyf8"]
-[ext_resource type="Script" uid="uid://bslo1xeygjruo" path="res://mapas/cinza.gd" id="8_ja3h8"]
+[ext_resource type="Script" uid="uid://bslo1xeygjruo" path="res://npcs/cinza.gd" id="8_ja3h8"]
 [ext_resource type="Texture2D" uid="uid://cpqhd4ach2g66" path="res://arte/sprites/verde.png" id="9_yogvm"]
-[ext_resource type="Script" uid="uid://4wg8p55mt4wg" path="res://mapas/azul.gd" id="10_lprg1"]
-[ext_resource type="Script" uid="uid://0my160lmch4w" path="res://mapas/verde.gd" id="12_j7so3"]
+[ext_resource type="PackedScene" path="res://inventory/DroppedItem.tscn" id="10_item"]
+[ext_resource type="Script" uid="uid://4wg8p55mt4wg" path="res://npcs/azul.gd" id="10_lprg1"]
+[ext_resource type="Script" uid="uid://0my160lmch4w" path="res://npcs/verde.gd" id="12_j7so3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wktb5"]
 texture = ExtResource("1_hlfx6")
@@ -46,10 +47,10 @@ sources/0 = SubResource("TileSetAtlasSource_wktb5")
 size = Vector2(182, 19)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d8wmd"]
-size = Vector2(92, 20)
+size = Vector2(92, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c2bec"]
-size = Vector2(22, 1140)
+size = Vector2(13, 1140)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5fbls"]
 size = Vector2(64, 64)
@@ -82,7 +83,7 @@ destino_mapa = "res://mapas/mapa3.tscn"
 spawn_id_saida = &"EntradaMapa2"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PortaParaMapa3" unique_id=903000239]
-position = Vector2(602, 881)
+position = Vector2(602, 882)
 shape = SubResource("RectangleShape2D_d8wmd")
 
 [node name="PortaParaMapa4" type="Area2D" parent="." unique_id=1483213382]
@@ -94,7 +95,7 @@ destino_mapa = "res://mapas/mapa4.tscn"
 spawn_id_saida = &"EntradaMapa2"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PortaParaMapa4" unique_id=1372088142]
-position = Vector2(-99, 87)
+position = Vector2(-103.5, 87)
 shape = SubResource("RectangleShape2D_c2bec")
 
 [node name="Spawns" type="Node2D" parent="." unique_id=1659503052]
@@ -115,6 +116,7 @@ script = ExtResource("5_5fbls")
 spawn_id = &"EntradaMapa4"
 
 [node name="Entidades" type="Node2D" parent="." unique_id=247407490]
+z_index = 10
 y_sort_enabled = true
 position = Vector2(1, 0)
 
@@ -183,3 +185,8 @@ texture = ExtResource("9_yogvm")
 light_mask = 0
 visibility_layer = 9
 shape = SubResource("RectangleShape2D_5fbls")
+
+[node name="ItemNoChao" parent="Entidades" unique_id=1179857351 instance=ExtResource("10_item")]
+position = Vector2(109, 0)
+item_id = "potion_l"
+quantidade = 2

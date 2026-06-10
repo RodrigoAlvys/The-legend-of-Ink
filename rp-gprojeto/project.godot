@@ -20,6 +20,7 @@ config/icon="uid://buepp47nusabb"
 Game="*uid://db6ftun4vjjx4"
 Fade="*uid://nkjlryotnf8r"
 DialogueUI="*uid://cwtquivv6j7lr"
+Gamestate="*uid://kmqwxg0q1hiy"
 
 [display]
 
