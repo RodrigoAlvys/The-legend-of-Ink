@@ -11,7 +11,31 @@
 [ext_resource type="Texture2D" uid="uid://bn64amwsgedxp" path="res://arte/sprites/slime.png" id="5_mt5wc"]
 [ext_resource type="Script" uid="uid://jyuis7x8ox6h" path="res://scripts/pathfinder/ponto_de_interesse.gd" id="6_0fef2"]
 [ext_resource type="Texture2D" uid="uid://caop3mfnw8o2u" path="res://arte/sprites/roxo.png" id="6_12toi"]
-[ext_resource type="Script" uid="uid://dt7wi5mflfd0e" path="res://mapas/roxo.gd" id="6_dvs42"]
+[ext_resource type="Script" uid="uid://dt7wi5mflfd0e" path="res://npcs/roxo.gd" id="6_dvs42"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_li2xj"]
+vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_p5k45"]
+vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_7jdjm"]
+vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ytfxv"]
+vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
+agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_li2xj"]
 vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
@@ -74,7 +98,7 @@ sources/0 = SubResource("TileSetAtlasSource_2k3q6")
 radius = 51.512207
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jnqah"]
-size = Vector2(245, 36)
+size = Vector2(245, 10)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dvs42"]
 size = Vector2(64, 64)
@@ -162,7 +186,7 @@ spawn_id_saida = &"EntradaMapa1"
 missao_id = "despertar"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PortaParaMapa2" unique_id=953322088]
-position = Vector2(-838.5, 1267)
+position = Vector2(-838.5, 1280)
 shape = SubResource("RectangleShape2D_jnqah")
 
 [node name="Spawns" type="Node2D" parent="." unique_id=23000458]

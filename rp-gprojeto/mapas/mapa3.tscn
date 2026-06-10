@@ -6,11 +6,11 @@
 [ext_resource type="Script" uid="uid://dotk4iuvqhbqu" path="res://mapas/portas.gd" id="4_dw4op"]
 [ext_resource type="Script" uid="uid://dxjwaun3d2qp0" path="res://mapas/mapamarker.gd" id="5_dw4op"]
 [ext_resource type="Texture2D" uid="uid://cl3ygxusb3ed3" path="res://arte/sprites/amarelo.png" id="6_a1nll"]
-[ext_resource type="Script" uid="uid://cdxomt3ipj3cg" path="res://mapas/amarelo_loja.gd" id="6_hdrf4"]
+[ext_resource type="Script" uid="uid://cdxomt3ipj3cg" path="res://npcs/amarelo_loja.gd" id="6_hdrf4"]
 [ext_resource type="Texture2D" uid="uid://bjw8673vmc1h4" path="res://arte/sprites/ciano.png" id="7_dxu7r"]
 [ext_resource type="Texture2D" uid="uid://dvql0refv06yu" path="res://arte/sprites/rosa.png" id="8_qp1pb"]
-[ext_resource type="Script" uid="uid://bs58jxwh8mtin" path="res://mapas/ciano.gd" id="8_uqtwn"]
-[ext_resource type="Script" uid="uid://c6kruk0h4dvfe" path="res://mapas/rosa.gd" id="10_7aums"]
+[ext_resource type="Script" uid="uid://bs58jxwh8mtin" path="res://npcs/ciano.gd" id="8_uqtwn"]
+[ext_resource type="Script" uid="uid://c6kruk0h4dvfe" path="res://npcs/rosa.gd" id="10_7aums"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gj8nn"]
 texture = ExtResource("1_swxvy")
