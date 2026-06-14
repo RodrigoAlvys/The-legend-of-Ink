@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends BaseCharacter
 
 const WALK_SPEED = 250.0
 const RUN_SPEED = 500.0
@@ -8,7 +8,7 @@ var facing_direction = Vector2.DOWN
 @onready var shapecast = $ShapeCast2D
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 
 	if DialogueUI.is_active():
 		velocity = Vector2.ZERO
