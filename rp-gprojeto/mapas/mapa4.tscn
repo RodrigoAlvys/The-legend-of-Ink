@@ -89,7 +89,6 @@ script = ExtResource("5_8tlp6")
 spawn_id = &"EntradaMapa5"
 
 [node name="Entidades" type="Node2D" parent="." unique_id=678569984]
-z_index = 10
 y_sort_enabled = true
 position = Vector2(1, 0)
 

@@ -65,7 +65,6 @@ script = ExtResource("5_lkfwb")
 spawn_id = &"EntradaMapa4"
 
 [node name="Entidades" type="Node2D" parent="." unique_id=810357186]
-z_index = 10
 y_sort_enabled = true
 
 [node name="CharacterBody2D" parent="Entidades" unique_id=1566683655 instance=ExtResource("2_mub02")]
