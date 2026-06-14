@@ -65,8 +65,23 @@ func _update_view() -> void:
 	var c: int = slot_data["count"]
 	_label.text = it.name
 	_count.text = ("x%d" % c) if c > 1 else ""
-	tooltip_text = "%s\n[%s]  •  Valor: %d\n%s" % [it.name, it.type_label(), it.value, it.description]
+	tooltip_text = _tooltip_for(it)
 	_style.bg_color = _color_for(it.type)
+
+# Tooltip com as informações do item, incluindo os campos 
+# de combate quando existirem
+func _tooltip_for(it: Item) -> String:
+	var t := "%s\n[%s]  •  Valor: %d" % [it.name, it.type_label(), it.value]
+	if it.dano_base > 0 or it.penetracao > 0:
+		t += "\nDano: %d  •  Penetração: %d" % [it.dano_base, it.penetracao]
+	if it.armadura > 0:
+		t += "\nArmadura: %d" % it.armadura
+	for stat in it.stat_bonus:
+		t += "\n%s: %+d" % [str(stat).to_upper(), int(it.stat_bonus[stat])]
+	if it.type == Item.Type.SPECIAL:
+		t += "\n(clique para usar)"
+	t += "\n" + it.description
+	return t
 
 func _color_for(t: int) -> Color:
 	match t:
@@ -76,6 +91,8 @@ func _color_for(t: int) -> Color:
 			return Color(0.20, 0.26, 0.40)
 		Item.Type.QUEST:
 			return Color(0.36, 0.28, 0.16)
+		Item.Type.SPECIAL:
+			return Color(0.32, 0.20, 0.38)
 	return Color(0.16, 0.16, 0.20)
 
 func _gui_input(event: InputEvent) -> void:

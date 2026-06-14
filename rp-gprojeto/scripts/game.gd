@@ -24,6 +24,9 @@ func _ready() -> void:
 	inventory.add_item(ItemDatabase.get_item("potion_s"), 3)
 	inventory.add_item(ItemDatabase.get_item("sword_rusty"), 1)
 	inventory.add_item(ItemDatabase.get_item("armor_leather"), 1)
+	# itens especiais de teste — pergaminho abre diálogo, elixir dá +5 HP máx
+	inventory.add_item(ItemDatabase.get_item("pergaminho_velho"), 1)
+	inventory.add_item(ItemDatabase.get_item("elixir_vigor"), 2)
 
 	# cria a tela e pendura no Game (assim ela aparece em qualquer mapa)
 	inventory_ui = InventoryUI.new()

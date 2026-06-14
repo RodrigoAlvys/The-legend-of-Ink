@@ -39,6 +39,30 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
 agent_radius = 0.0
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_li2xj"]
+vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_p5k45"]
+vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_7jdjm"]
+vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ytfxv"]
+vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
+agent_radius = 0.0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2k3q6"]
 texture = ExtResource("1_7pacf")
 texture_region_size = Vector2i(80, 80)
