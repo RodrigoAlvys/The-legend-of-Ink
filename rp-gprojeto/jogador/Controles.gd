@@ -44,7 +44,7 @@ func _input(event):
 			return
 
 		raycast.force_raycast_update()
-
+				
 		if raycast.is_colliding():
 			var obj = raycast.get_collider()
 
