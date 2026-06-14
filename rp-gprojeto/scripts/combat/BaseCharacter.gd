@@ -1,89 +1,92 @@
 #BaseCharacter
+# Classe abstrata
 extends CharacterBody2D
 
 class_name BaseCharacter
 
-@export var first_name:String
-@export var surname:String
+var _name:Array[String] = []
+var fullname:String:
+	get: return " ".join(_name)
+	set(new):
+		self._name = new.strip_edges().capitalize().split()
+var first_name:String:
+	get: return _name[0] if not self._name.is_empty() else ""
+	set(new):
+		self._name[0] = new.strip_edges().capitalize().split()[0]
+var surname:String = "":
+	get: return " ".join(self._name.slice(1))
+	set(new):
+		var new_array:Array[String] = new.strip_edges().capitalize().split()
+		if _name.is_empty():
+			self._name = [""]
+		var newer:Array[String] = [self._name[0]]
+		self._name = newer + new_array
 # F = Feminino; M = Masculino; Não Binário = NB 
-@export_enum("Masculino", "Feminino", "Não Binário") var gener:String
-
-@export_range(0, 10) var level:int = 0
+var _gender:String
+var gender:String:
+	get:
+		if self._gender.split()[0] in ["M", "MASCULINO", "HOMEM", "MENINO"]:
+			return "e"
+		elif self._gender.split()[0] in ["F", "FEMININO", "MULHER", "MENINA"]:
+			return "a"
+		else:
+			return "u"
+	set(gen):
+		self._gender = gen.strip_edges().to_upper()
+var _level:int
+var level:int = 0:
+	get: return self._level
+	set(novo): _level = max(0, min(10, novo))
 
 # Atributos de 1 a 20 D&D vibes
-@export_range(1, 20) var STR:int = 10
-var STR_mod:int = 10
-@export_range(1, 20) var DEX:int = 10
-var DEX_mod:int = 10
-@export_range(1, 20) var CON:int = 10
-var CON_mod:int = 10
-@export_range(1, 20) var ESP:int = 10
-var ESP_mod:int = 10
-var ATR_list:Dictionary = {
-	"STR": func(): return self.STR, 
-	"DEX": func(): return self.DEX, 
-	"CON": func(): return self.CON, 
-	"ESP": func(): return self.ESP
-}
+var STR:int = 10
+var STR_mod:int = 0
+var DEX:int = 10
+var DEX_mod:int = 0
+var CON:int = 10
+var CON_mod:int = 0
+var ESP:int = 10
+var ESP_mod:int = 0
 
-@export_range(0, 0, 1, "or_greater") var hp_max:int
+var _hp_max:int
+var hp_max:int:
+	get: return self._hp_max
+	set(new): self._hp_max = max(1, new)
 var hp_max_mod:int
-@export var hp_current:int
-@export_range(0, 0, 1, "or_greater") var mp_max:int
+var _hp_current:int
+var hp_current:int:
+	get: return self._hp_current
+	set(new): self._hp_current = min(self.get_max_health(), new)
+var _mp_max:int
+var mp_max:int:
+	get: return self._mp_max
+	set(new): self._mp_max = max(1, new)
 var mp_max_mod:int
-@export var mp_current:int
+var _mp_current:int
+var mp_current:int:
+	get: return self._mp_current
+	set(new): self._mp_current = min(self.get_max_mana(), new)
 
 # Inventário
 
-func _init(_name:String, _gener:String, _str:int, _dex:int, _con:int, _esp:int, _level:int) -> void:
-	var atrs:Array = [_str, _dex, _con, _esp]
-	var regex = RegEx.new()
-	_name.strip_edges().capitalize()
-	regex.compile("\\s+")
-	_name = regex.sub(_name, " ", true)
-	for x in range(atrs.size()):
-		if atrs[x]<1:
-			print("[color=yellow]Aviso! O valor mínimo de um atributo é 1[/color]")
-			atrs[x] = 1
-	if _level > 10:
-		print("[color=yellow]Aviso! O level máximo é 10[/color]")
-		_level = 10
-	elif _level < 1:
-		print("[color=yellow]Aviso! O level mínimo é 1[/color]")
-		_level = 1
-	self.level = _level
-	self.STR = atrs[0]
-	self.DEX = atrs[1]
-	self.CON = atrs[2]
-	self.ESP = atrs[3]
-	self.first_name = _name.split()[0]
-	self.surname = "".join(_name.split().slice(1))
-	self.gener = regex.sub(_gener.strip_edges().to_upper(), " ", true)
-	self.hp_max = self.get_CON() + floori(self.level*self.get_CON()/2.0)
-	self.hp_current = self.hp_max
-	self.mp_max = floori(self.get_ESP()/2.0) + floori(self.level*self.get_ESP()/4.0)
-	self.mp_current = self.mp_max
 func attack(ATR_base:String="STR") -> int:
 	return randi_range(1, 10) + atribute_mod(ATR_base)
 func defend():
-	pass
+	return 
 func run():
-	pass
-func atribute_mod(ATR:String, mod:bool=true) -> int:
-	ATR.strip_edges().to_upper()
-	if ATR not in self.ATR_list:
-		print("[color=yellow]Error! {ATR} não é um atributo padrão na ficha! retornando 0[/color]")
+	return randi_range(1, 100)
+func atribute_mod(attr:String, mod:bool=true):
+	attr.strip_edges().to_upper()
+	var getters:Dictionary[String, Callable] = {
+		"STR": self.get_STR,
+		"DEX": self.get_DEX,
+		"CON": self.get_CON,
+		"ESP": self.get_ESP,
+	}
+	if not getters.has(attr):
+		push_error("Atributo inválido: ", attr)
 		return 0
-	var ATR_value:int
-	if ATR == "STR":
-		ATR_value = self.get_STR(mod)
-	elif ATR == "DEX":
-		ATR_value = self.get_DEX(mod)
-	elif ATR == "CON":
-		ATR_value = self.get_CON(mod)
-	elif ATR == "DEX":
-		ATR_value = self.get_CON(mod)
-	return floori(ATR_value/2.0)-5
+	return floori(getters[attr].call(mod)/2.0)-5
 func get_STR(mod:bool=true) -> int:
 	return self.STR+self.STR_mod if mod else self.STR
 func get_DEX(mod:bool=true) -> int:
@@ -92,10 +95,9 @@ func get_CON(mod:bool=true) -> int:
 	return self.CON+self.CON_mod if mod else self.CON
 func get_ESP(mod:bool=true) -> int:
 	return self.ESP+self.ESP_mod if mod else self.ESP
-func get_pronoun(plural:bool=false) -> String:
-	if self.gener.split()[0] in ["M", "MASCULINO", "HOMEM", "MENINO"]:
-		return "e" if not plural else "es"
-	if self.gener in ["F", "FEMININO", "MULHER", "MENINA"]:
-		return "a" if not plural else "as"
-	else:
-		return "u" if not plural else "us"
+func get_max_health(mod:bool=true) -> int:
+	var hp:int = self.hp_max+self.hp_max_mod if mod else self.hp_max
+	return max(1, hp)
+func get_max_mana(mod:bool=true) -> int:
+	var mp:int = self.mp_max+self.mp_max_mod if mod else self.mp_max
+	return max(1, mp)

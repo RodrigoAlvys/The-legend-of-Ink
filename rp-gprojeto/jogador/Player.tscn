@@ -11,6 +11,9 @@ size = Vector2(64, 64)
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1566683655 groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_kpjcp")
+first_name = "Ink"
+gener = "Não Binário"
+level = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1132727732]
 position = Vector2(-3.8146973e-06, 0)
