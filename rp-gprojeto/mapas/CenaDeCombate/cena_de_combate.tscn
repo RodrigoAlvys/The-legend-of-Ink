@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://52d5nkxfqnyi"]
+
+[ext_resource type="Script" uid="uid://du6dd08ttj48r" path="res://mapas/CenaDeCombate/combate_engine.gd" id="1_mmvge"]
+
+[node name="CenaDeCombate" type="Node2D" unique_id=560666884]
+
+[node name="CombateEngine" type="Node2D" parent="." unique_id=1517621591]
+script = ExtResource("1_mmvge")

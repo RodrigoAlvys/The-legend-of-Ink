@@ -46,17 +46,38 @@ var _gender:String
 var _level:int
 @export_range(0, 10) var level:int = 0:
 	get: return self._level
-	set(novo): _level = max(0, min(10, novo))
+	set(novo):
+		_level = max(0, min(10, novo))
+		self._refresh_hp_max()
+		self._refresh_mp_max()
 
 # Atributos de 1 a 20 D&D vibes
 @export_group("Atributos bases")
-@export_range(1, 30) var STR:int = 10
+var _STR:int
+@export_range(1, 30) var STR:int = 10:
+	get: return _STR
+	set(new):
+		_STR = max(1, min(30, new))
 var STR_mod:int = 0
-@export_range(1, 30) var DEX:int = 10
+var _DEX:int
+@export_range(1, 30) var DEX:int = 10:
+	get: return _DEX
+	set(new):
+		_DEX = max(1, min(30, new))
 var DEX_mod:int = 0
-@export_range(1, 30) var CON:int = 10
+var _CON:int
+@export_range(1, 30) var CON:int = 10:
+	get: return _CON
+	set(new):
+		_CON = max(1, min(30, new))
+		self._refresh_hp_max()
 var CON_mod:int = 0
-@export_range(1, 30) var ESP:int = 10
+var _ESP:int
+@export_range(1, 30) var ESP:int = 10:
+	get: return _ESP
+	set(new):
+		_ESP = max(1, min(30, new))
+		self._refresh_mp_max()
 var ESP_mod:int = 0
 
 @export_group("Atributos produtos")
@@ -81,6 +102,8 @@ var _mp_current:int
 
 # Inventário
 
+func initiative() -> int:
+	return generic_roll("DEX", false)
 func attack(ATR_base:String="STR") -> int:
 	return generic_roll(ATR_base)
 func give_damage(ATR_base:String="STR") -> int:
@@ -92,8 +115,9 @@ func defend():
 func run():
 	return randi_range(1, 100)
 func take_damage(damage:int) -> void:
-	var temp = self.hp_current - max(damage-self.get_CON(), 0)
-	self.hp_current = temp
+	self.hp_current -= max(damage-self.get_CON(), 0)
+func take_healing(heal:int) -> void:
+	self.hp_current += max(heal, 0)
 func atribute_mod(attr:String, mod:bool=true):
 	attr.strip_edges().to_upper()
 	var getters:Dictionary[String, Callable] = {
@@ -128,3 +152,7 @@ func generic_roll(attr:String, prof_mod:bool=true, attr_mod:bool=true) -> int:
 	if prof_mod:
 		modifier+=level
 	return dice + modifier
+func _refresh_hp_max() -> void:
+	self.hp_max = self.get_CON()+floori(self.level*self.get_CON()/2.0)
+func _refresh_mp_max() -> void:
+	self.mp_max = floori(self.get_ESP()/2.0) + floori(self.level*self.get_ESP()/4.0)

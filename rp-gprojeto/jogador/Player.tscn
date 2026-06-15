@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://gc8ppb38pjih"]
 
 [ext_resource type="Script" uid="uid://52ud2qp5kpku" path="res://jogador/controles.gd" id="1_kpjcp"]
-[ext_resource type="Script" uid="uid://byi84i2d6lxmh" path="res://jogador/status.gd" id="2_jrrwl"]
 [ext_resource type="Texture2D" uid="uid://ulaaj8t5mqlt" path="res://arte/sprites/ink.png" id="2_kne1u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kdubu"]
@@ -10,12 +9,6 @@ size = Vector2(64, 64)
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1566683655 groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_kpjcp")
-
-[node name="Status" type="Node2D" parent="." unique_id=1377349232]
-script = ExtResource("2_jrrwl")
-fullname = "Ink"
-gender = "Masculino"
-level = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1132727732]
 position = Vector2(-3.8146973e-06, 0)

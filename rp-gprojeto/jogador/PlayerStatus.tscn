@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bc2pvwntof11n"]
+
+[ext_resource type="Script" uid="uid://dhekku4h8s4qy" path="res://scripts/combat/PlayerStatus.gd" id="1_ivsc1"]
+
+[node name="PlayerStatus" type="Node2D" unique_id=1273574013]
+script = ExtResource("1_ivsc1")
+fullname = "Ink"
+gender = "Masculino"
+level = 1
