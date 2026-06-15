@@ -49,6 +49,7 @@ var _level:int
 	set(novo): _level = max(0, min(10, novo))
 
 # Atributos de 1 a 20 D&D vibes
+@export_group("Atributos bases")
 @export_range(1, 30) var STR:int = 10
 var STR_mod:int = 0
 @export_range(1, 30) var DEX:int = 10
@@ -58,6 +59,7 @@ var CON_mod:int = 0
 @export_range(1, 30) var ESP:int = 10
 var ESP_mod:int = 0
 
+@export_group("Atributos produtos")
 var _hp_max:int
 @export_range(1, 999) var hp_max:int = 10:
 	get: return self._hp_max
