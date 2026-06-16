@@ -12,32 +12,8 @@
 [ext_resource type="Script" uid="uid://jyuis7x8ox6h" path="res://scripts/pathfinder/ponto_de_interesse.gd" id="6_0fef2"]
 [ext_resource type="Texture2D" uid="uid://caop3mfnw8o2u" path="res://arte/sprites/roxo.png" id="6_12toi"]
 [ext_resource type="Script" uid="uid://dt7wi5mflfd0e" path="res://npcs/roxo.gd" id="6_dvs42"]
-[ext_resource type="Script" uid="uid://4fadttw774tc" path="res://mapas/papeltutorial.gd" id="10_r237k"]
+[ext_resource type="Script" uid="uid://4fadttw774tc" path="res://npcs/papeltutorial.gd" id="10_r237k"]
 [ext_resource type="Texture2D" uid="uid://dldeaagux2jpl" path="res://arte/objetos/papeltutorial.png" id="13_0fef2"]
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_li2xj"]
-vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
-agent_radius = 0.0
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_p5k45"]
-vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
-agent_radius = 0.0
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_7jdjm"]
-vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
-agent_radius = 0.0
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_ytfxv"]
-vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
-agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_li2xj"]
 vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
