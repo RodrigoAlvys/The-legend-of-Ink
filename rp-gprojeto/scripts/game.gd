@@ -11,6 +11,9 @@ var inventory_ui: InventoryUI
 # Notificações (coleta de itens, etc.)
 var notifications: NotificationUI
 
+# Loja (mercador)
+var shop_ui: ShopUI
+
 # missões 
 var missions: MissionManager
 var mission_menu: MissionMenu
@@ -38,6 +41,11 @@ func _ready() -> void:
 	add_child(notifications)
 	# ao largar um item do inventário, ele aparece no chão pra ser coletado
 	inventory.item_dropped.connect(_on_item_dropped)
+
+	# loja (aberta pelo mercador)
+	shop_ui = ShopUI.new()
+	shop_ui.inventory = inventory
+	add_child(shop_ui)
 
 	missions = MissionManager.new()
 	missions.inventory = inventory      # pra entregar recompensa no inventário
