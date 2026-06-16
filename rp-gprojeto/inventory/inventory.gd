@@ -51,8 +51,12 @@ func has_item(item: Item) -> bool:
 	return _find_slot(item) != -1
 
 func get_count(item: Item) -> int:
-	var idx: int = _find_slot(item)
-	return slots[idx]["count"] if idx != -1 else 0
+	# soma todas as pilhas do item (itens não-empilháveis ficam em vários slots)
+	var total: int = 0
+	for s in slots:
+		if s["item"].id == item.id:
+			total += int(s["count"])
+	return total
 
 # ---------------- ações no inventário ----------------
 func consume(index: int) -> bool:
@@ -64,6 +68,31 @@ func consume(index: int) -> bool:
 	if item.heal_amount > 0:
 		base_stats["hp"] = mini(base_stats["hp"] + item.heal_amount, base_stats["max_hp"])
 	_remove_at(index, 1)
+	changed.emit()
+	return true
+
+# Usa um item ESPECIAL: efeitos diversos conforme item.efeito_especial.
+#   "dialogo"  -> abre caixa de diálogo com as linhas do item
+#   "atributo" -> modifica atributos da ficha (ex.: elixir que dá +5 max_hp)
+func usar_especial(index: int) -> bool:
+	if not _valid(index):
+		return false
+	var item: Item = slots[index]["item"]
+	if item.type != Item.Type.SPECIAL:
+		return false
+	var dados: Dictionary = item.efeito_dados
+	match item.efeito_especial:
+		"dialogo":
+			DialogueUI.start_dialogue(Array(dados.get("linhas", ["..."]), TYPE_STRING, "", null))
+		"atributo":
+			for stat in dados.get("stats", {}):
+				base_stats[stat] = int(base_stats.get(stat, 0)) + int(dados["stats"][stat])
+			if base_stats.has("hp") and base_stats.has("max_hp"):
+				base_stats["hp"] = mini(base_stats["hp"], base_stats["max_hp"])
+		_:
+			return false
+	if dados.get("consumir", false):
+		_remove_at(index, 1)
 	changed.emit()
 	return true
 
@@ -127,14 +156,21 @@ func set_coins(amount: int) -> void:
 func add_coins(amount: int) -> void:
 	set_coins(coins + amount)
 
+# Status totais calculados NA HORA (base + equipados). Os efeitos dos itens
+# equipados nunca alteram a ficha base  — tirar o item, tira o efeito.
 func get_total_stats() -> Dictionary:
 	var total: Dictionary = base_stats.duplicate()
+	total["pen"] = int(total.get("pen", 0))
 	for key in equipped:
 		var it = equipped[key]
 		if it == null:
 			continue
 		for stat in it.stat_bonus:
 			total[stat] = int(total.get(stat, 0)) + int(it.stat_bonus[stat])
+		# campos de combate 
+		total["atk"] = int(total.get("atk", 0)) + it.dano_base
+		total["pen"] = int(total.get("pen", 0)) + it.penetracao
+		total["def"] = int(total.get("def", 0)) + it.armadura
 	if total.has("hp") and total.has("max_hp"):
 		total["hp"] = mini(int(total["hp"]), int(total["max_hp"]))
 	return total

@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://gc8ppb38pjih"]
 
-[ext_resource type="Script" uid="uid://donlebujuj1n2" path="res://jogador/controles.gd" id="1_kpjcp"]
+[ext_resource type="Script" uid="uid://52ud2qp5kpku" path="res://jogador/controles.gd" id="1_kpjcp"]
 [ext_resource type="Texture2D" uid="uid://ulaaj8t5mqlt" path="res://arte/sprites/ink.png" id="2_kne1u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kdubu"]
 size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jnmpg"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1566683655 groups=["player"]]
 collision_layer = 2
@@ -22,6 +24,7 @@ texture = ExtResource("2_kne1u")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1427208974]
 position = Vector2(-3.8146973e-06, 0)
 
-[node name="RayCast2D" type="RayCast2D" parent="." unique_id=726319776]
-position = Vector2(-3.8146973e-06, 1)
-collision_mask = 8
+[node name="ShapeCast2D" type="ShapeCast2D" parent="." unique_id=2100097874]
+shape = SubResource("RectangleShape2D_jnmpg")
+collision_mask = 24
+collide_with_areas = true

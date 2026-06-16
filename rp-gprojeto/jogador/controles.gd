@@ -5,7 +5,7 @@ const RUN_SPEED = 500.0
 
 var facing_direction = Vector2.DOWN
 
-@onready var raycast = $RayCast2D
+@onready var shapecast = $ShapeCast2D
 
 
 func _physics_process(delta):
@@ -33,7 +33,7 @@ func _physics_process(delta):
 	velocity = direction * speed
 	move_and_slide()
 
-	raycast.target_position = facing_direction * 64
+	shapecast.target_position = facing_direction * 64
 
 
 func _input(event):
@@ -43,10 +43,14 @@ func _input(event):
 			DialogueUI.next()
 			return
 
-		raycast.force_raycast_update()
+		shapecast.force_shapecast_update()
 
-		if raycast.is_colliding():
-			var obj = raycast.get_collider()
+		if shapecast.is_colliding():
 
-			if obj and obj.has_method("interact"):
-				obj.interact()
+			for i in range(shapecast.get_collision_count()):
+
+				var obj = shapecast.get_collider(i)
+
+				if obj and obj.has_method("interact"):
+					obj.interact()
+					break

@@ -11,6 +11,9 @@ var inventory_ui: InventoryUI
 # Notificações (coleta de itens, etc.)
 var notifications: NotificationUI
 
+# Loja (mercador)
+var shop_ui: ShopUI
+
 # missões 
 var missions: MissionManager
 var mission_menu: MissionMenu
@@ -24,6 +27,9 @@ func _ready() -> void:
 	inventory.add_item(ItemDatabase.get_item("potion_s"), 3)
 	inventory.add_item(ItemDatabase.get_item("sword_rusty"), 1)
 	inventory.add_item(ItemDatabase.get_item("armor_leather"), 1)
+	# itens especiais de teste — pergaminho abre diálogo, elixir dá +5 HP máx
+	inventory.add_item(ItemDatabase.get_item("pergaminho_velho"), 1)
+	inventory.add_item(ItemDatabase.get_item("elixir_vigor"), 2)
 
 	# cria a tela e pendura no Game (assim ela aparece em qualquer mapa)
 	inventory_ui = InventoryUI.new()
@@ -35,6 +41,11 @@ func _ready() -> void:
 	add_child(notifications)
 	# ao largar um item do inventário, ele aparece no chão pra ser coletado
 	inventory.item_dropped.connect(_on_item_dropped)
+
+	# loja (aberta pelo mercador)
+	shop_ui = ShopUI.new()
+	shop_ui.inventory = inventory
+	add_child(shop_ui)
 
 	missions = MissionManager.new()
 	missions.inventory = inventory      # pra entregar recompensa no inventário

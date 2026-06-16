@@ -35,7 +35,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_q3d68")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wrty4"]
-size = Vector2(241, 20)
+size = Vector2(241, 13)
 
 [node name="Mapa5" type="Node2D" unique_id=1048120810]
 script = ExtResource("1_q3d68")
@@ -53,7 +53,7 @@ destino_mapa = "res://mapas/mapa4.tscn"
 spawn_id_saida = &"EntradaMapa5"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PortaParaMapa4" unique_id=961265243]
-position = Vector2(40.5, 76)
+position = Vector2(40.5, 79.5)
 shape = SubResource("RectangleShape2D_wrty4")
 
 [node name="Spawns" type="Node2D" parent="." unique_id=396963272]
@@ -65,7 +65,6 @@ script = ExtResource("5_lkfwb")
 spawn_id = &"EntradaMapa4"
 
 [node name="Entidades" type="Node2D" parent="." unique_id=810357186]
-z_index = 10
 y_sort_enabled = true
 
 [node name="CharacterBody2D" parent="Entidades" unique_id=1566683655 instance=ExtResource("2_mub02")]

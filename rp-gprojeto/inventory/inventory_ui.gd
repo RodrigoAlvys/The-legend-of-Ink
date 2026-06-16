@@ -157,9 +157,10 @@ func _refresh() -> void:
 			_slots[i].set_data(i, {})
 	_coins_label.text = "Moedas: %d" % inventory.coins
 	var st := inventory.get_total_stats()
-	_stats_label.text = "HP: %d/%d\nATK: %d\nDEF: %d" % [
+	_stats_label.text = "HP: %d/%d\nATK: %d\nDEF: %d\nPEN: %d" % [
 		int(st.get("hp", 0)), int(st.get("max_hp", 0)),
-		int(st.get("atk", 0)), int(st.get("def", 0))
+		int(st.get("atk", 0)), int(st.get("def", 0)),
+		int(st.get("pen", 0))
 	]
 	_refresh_equipped()
 
@@ -202,6 +203,10 @@ func _on_slot_clicked(index: int, button: int) -> void:
 			inventory.consume(index)
 		elif item.type == Item.Type.EQUIPABLE:
 			inventory.equip(index)
+		elif item.type == Item.Type.SPECIAL:
+			var abre_dialogo: bool = item.efeito_especial == "dialogo"
+			if inventory.usar_especial(index) and abre_dialogo:
+				close()   # fecha o inventário pra caixa de diálogo aparecer livre
 	elif button == MOUSE_BUTTON_RIGHT:
 		inventory.drop(index, 1)
 

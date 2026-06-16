@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://gc8ppb38pjih" path="res://jogador/Player.tscn" id="2_txu65"]
 [ext_resource type="Script" uid="uid://dotk4iuvqhbqu" path="res://mapas/portas.gd" id="4_8tlp6"]
 [ext_resource type="Script" uid="uid://dxjwaun3d2qp0" path="res://mapas/mapamarker.gd" id="5_8tlp6"]
-[ext_resource type="Script" uid="uid://bvvq11dn7ycii" path="res://mapas/laranja.gd" id="6_154gr"]
+[ext_resource type="Script" uid="uid://bvvq11dn7ycii" path="res://npcs/laranja.gd" id="6_154gr"]
 [ext_resource type="Texture2D" uid="uid://dlcdc21f5aosx" path="res://arte/sprites/laranja.png" id="6_wsvxn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_12j2a"]
@@ -37,10 +37,10 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_12j2a")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wsvxn"]
-size = Vector2(24.5, 674)
+size = Vector2(16.5, 674)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_154gr"]
-size = Vector2(284, 31)
+size = Vector2(284, 17)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfew4"]
 size = Vector2(64, 64)
@@ -61,7 +61,7 @@ destino_mapa = "res://mapas/mapa2.tscn"
 spawn_id_saida = &"EntradaMapa4"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PortaParaMapa2" unique_id=1437160157]
-position = Vector2(876.25, 13)
+position = Vector2(880.25, 13)
 shape = SubResource("RectangleShape2D_wsvxn")
 
 [node name="PortaParaMapa5" type="Area2D" parent="." unique_id=1793450873]
@@ -73,7 +73,7 @@ destino_mapa = "res://mapas/mapa5.tscn"
 spawn_id_saida = &"EntradaMapa4"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PortaParaMapa5" unique_id=769349249]
-position = Vector2(-3320, -2794.5)
+position = Vector2(-3320, -2801.5)
 shape = SubResource("RectangleShape2D_154gr")
 
 [node name="Spawns" type="Node2D" parent="." unique_id=1650672670]
@@ -89,7 +89,6 @@ script = ExtResource("5_8tlp6")
 spawn_id = &"EntradaMapa5"
 
 [node name="Entidades" type="Node2D" parent="." unique_id=678569984]
-z_index = 10
 y_sort_enabled = true
 position = Vector2(1, 0)
 
