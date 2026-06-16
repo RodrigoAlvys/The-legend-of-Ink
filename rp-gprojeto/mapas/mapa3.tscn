@@ -69,6 +69,7 @@ shape = SubResource("RectangleShape2D_dw4op")
 position = Vector2(-276, 203)
 
 [node name="EntradaMapa2" type="Marker2D" parent="Spawns" unique_id=1866103272 groups=["spawn_points"]]
+position = Vector2(11, -12)
 script = ExtResource("5_dw4op")
 spawn_id = &"EntradaMapa2"
 
