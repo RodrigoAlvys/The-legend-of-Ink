@@ -114,7 +114,7 @@ script = ExtResource("4_ytfxv")
 [node name="Mobs" type="Node2D" parent="." unique_id=2065679150]
 
 [node name="Area2D" type="Area2D" parent="Mobs" unique_id=641119690 node_paths=PackedStringArray("pathfinder")]
-position = Vector2(265, 505)
+position = Vector2(365, 337)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("6_0fef2")
@@ -129,7 +129,7 @@ scale = Vector2(0.42708334, 0.42708334)
 texture = ExtResource("5_mt5wc")
 
 [node name="Area2D2" type="Area2D" parent="Mobs" unique_id=2089649972 node_paths=PackedStringArray("pathfinder")]
-position = Vector2(862, 542)
+position = Vector2(1079, 893)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("6_0fef2")
@@ -144,7 +144,7 @@ scale = Vector2(0.42708334, 0.42708334)
 texture = ExtResource("5_mt5wc")
 
 [node name="Area2D3" type="Area2D" parent="Mobs" unique_id=932981366 node_paths=PackedStringArray("pathfinder")]
-position = Vector2(1100.2457, 871.05334)
+position = Vector2(-729, 523)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("6_0fef2")

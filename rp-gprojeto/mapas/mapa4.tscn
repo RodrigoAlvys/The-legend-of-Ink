@@ -7,15 +7,55 @@
 [ext_resource type="Script" uid="uid://dxjwaun3d2qp0" path="res://mapas/mapamarker.gd" id="5_8tlp6"]
 [ext_resource type="Script" uid="uid://bvvq11dn7ycii" path="res://npcs/laranja.gd" id="6_154gr"]
 [ext_resource type="Texture2D" uid="uid://dlcdc21f5aosx" path="res://arte/sprites/laranja.png" id="6_wsvxn"]
+[ext_resource type="Script" uid="uid://jyuis7x8ox6h" path="res://scripts/pathfinder/ponto_de_interesse.gd" id="8_ijb4o"]
+[ext_resource type="Texture2D" uid="uid://bn64amwsgedxp" path="res://arte/sprites/slime.png" id="9_sobj2"]
+[ext_resource type="Script" uid="uid://drr8jo6cyq7q5" path="res://scripts/pathfinder/toggle_pathfinder.gd" id="10_2iw5d"]
+[ext_resource type="Script" uid="uid://kkptd63xmo8n" path="res://scripts/pathfinder/pathfinder.gd" id="11_livfq"]
+[ext_resource type="Script" uid="uid://dswpmo7muvybh" path="res://scripts/pathfinder/linha_visual.gd" id="12_3jxov"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ijb4o"]
+vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_sobj2"]
+vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_2iw5d"]
+vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_livfq"]
+vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_3jxov"]
+vertices = PackedVector2Array(40, 40, -40, 40, -40, -40, 40, -40)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)])
+agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_12j2a"]
 texture = ExtResource("1_8nq53")
 texture_region_size = Vector2i(80, 80)
 0:0/0 = 0
+0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ijb4o")
 1:0/0 = 0
+1:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_sobj2")
 2:0/0 = 0
+2:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_2iw5d")
 3:0/0 = 0
+3:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_livfq")
 4:0/0 = 0
+4:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3jxov")
 0:1/0 = 0
 0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)
 1:1/0 = 0
@@ -34,6 +74,7 @@ texture_region_size = Vector2i(80, 80)
 [sub_resource type="TileSet" id="TileSet_27id7"]
 tile_size = Vector2i(80, 80)
 physics_layer_0/collision_layer = 1
+navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_12j2a")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wsvxn"]
@@ -44,6 +85,9 @@ size = Vector2(284, 17)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfew4"]
 size = Vector2(64, 64)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_05wb2"]
+radius = 51.512207
 
 [node name="Mapa4" type="Node2D" unique_id=725789961]
 script = ExtResource("1_2jfwo")
@@ -110,3 +154,192 @@ flip_h = true
 light_mask = 0
 visibility_layer = 9
 shape = SubResource("RectangleShape2D_dfew4")
+
+[node name="Mobs" type="Node2D" parent="." unique_id=1530915720]
+position = Vector2(-1492, -590)
+
+[node name="Area2D" type="Area2D" parent="Mobs" unique_id=1349909184 node_paths=PackedStringArray("pathfinder")]
+position = Vector2(623, 487)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_ijb4o")
+pathfinder = NodePath("../../PathFinder/Path_engine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mobs/Area2D" unique_id=1008108779]
+scale = Vector2(0.42708334, 0.42708334)
+shape = SubResource("CircleShape2D_05wb2")
+
+[node name="Slime" type="Sprite2D" parent="Mobs/Area2D" unique_id=1396651773]
+scale = Vector2(0.42708334, 0.42708334)
+texture = ExtResource("9_sobj2")
+
+[node name="Area2D2" type="Area2D" parent="Mobs" unique_id=847685332 node_paths=PackedStringArray("pathfinder")]
+position = Vector2(916, -389)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_ijb4o")
+pathfinder = NodePath("../../PathFinder/Path_engine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mobs/Area2D2" unique_id=2120004787]
+scale = Vector2(0.42708334, 0.42708334)
+shape = SubResource("CircleShape2D_05wb2")
+
+[node name="Slime" type="Sprite2D" parent="Mobs/Area2D2" unique_id=699134767]
+scale = Vector2(0.42708334, 0.42708334)
+texture = ExtResource("9_sobj2")
+
+[node name="Area2D3" type="Area2D" parent="Mobs" unique_id=1856628753 node_paths=PackedStringArray("pathfinder")]
+position = Vector2(1100.2457, 871.05334)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_ijb4o")
+pathfinder = NodePath("../../PathFinder/Path_engine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mobs/Area2D3" unique_id=1453600588]
+scale = Vector2(0.42708334, 0.42708334)
+shape = SubResource("CircleShape2D_05wb2")
+
+[node name="Slime" type="Sprite2D" parent="Mobs/Area2D3" unique_id=286571031]
+scale = Vector2(0.42708334, 0.42708334)
+texture = ExtResource("9_sobj2")
+
+[node name="Area2D4" type="Area2D" parent="Mobs" unique_id=1751630977 node_paths=PackedStringArray("pathfinder")]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_ijb4o")
+pathfinder = NodePath("../../PathFinder/Path_engine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mobs/Area2D4" unique_id=1610586252]
+scale = Vector2(0.42708334, 0.42708334)
+shape = SubResource("CircleShape2D_05wb2")
+
+[node name="Slime" type="Sprite2D" parent="Mobs/Area2D4" unique_id=45601436]
+scale = Vector2(0.42708334, 0.42708334)
+texture = ExtResource("9_sobj2")
+
+[node name="Area2D5" type="Area2D" parent="Mobs" unique_id=1138069138 node_paths=PackedStringArray("pathfinder")]
+position = Vector2(-1155, -1488)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_ijb4o")
+pathfinder = NodePath("../../PathFinder/Path_engine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mobs/Area2D5" unique_id=775006135]
+scale = Vector2(0.42708334, 0.42708334)
+shape = SubResource("CircleShape2D_05wb2")
+
+[node name="Slime" type="Sprite2D" parent="Mobs/Area2D5" unique_id=1753892678]
+scale = Vector2(0.42708334, 0.42708334)
+texture = ExtResource("9_sobj2")
+
+[node name="Area2D6" type="Area2D" parent="Mobs" unique_id=670545518 node_paths=PackedStringArray("pathfinder")]
+position = Vector2(-1344, -20)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_ijb4o")
+pathfinder = NodePath("../../PathFinder/Path_engine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mobs/Area2D6" unique_id=309542968]
+scale = Vector2(0.42708334, 0.42708334)
+shape = SubResource("CircleShape2D_05wb2")
+
+[node name="Slime" type="Sprite2D" parent="Mobs/Area2D6" unique_id=559726093]
+scale = Vector2(0.42708334, 0.42708334)
+texture = ExtResource("9_sobj2")
+
+[node name="Area2D7" type="Area2D" parent="Mobs" unique_id=739772916 node_paths=PackedStringArray("pathfinder")]
+position = Vector2(-1822, -659)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_ijb4o")
+pathfinder = NodePath("../../PathFinder/Path_engine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mobs/Area2D7" unique_id=277401729]
+scale = Vector2(0.42708334, 0.42708334)
+shape = SubResource("CircleShape2D_05wb2")
+
+[node name="Slime" type="Sprite2D" parent="Mobs/Area2D7" unique_id=586685797]
+scale = Vector2(0.42708334, 0.42708334)
+texture = ExtResource("9_sobj2")
+
+[node name="Area2D8" type="Area2D" parent="Mobs" unique_id=1313884221 node_paths=PackedStringArray("pathfinder")]
+position = Vector2(-469, 1137)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_ijb4o")
+pathfinder = NodePath("../../PathFinder/Path_engine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mobs/Area2D8" unique_id=1887511190]
+scale = Vector2(0.42708334, 0.42708334)
+shape = SubResource("CircleShape2D_05wb2")
+
+[node name="Slime" type="Sprite2D" parent="Mobs/Area2D8" unique_id=128502406]
+scale = Vector2(0.42708334, 0.42708334)
+texture = ExtResource("9_sobj2")
+
+[node name="Area2D9" type="Area2D" parent="Mobs" unique_id=749368118 node_paths=PackedStringArray("pathfinder")]
+position = Vector2(-3090, -92)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_ijb4o")
+pathfinder = NodePath("../../PathFinder/Path_engine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mobs/Area2D9" unique_id=2073053461]
+scale = Vector2(0.42708334, 0.42708334)
+shape = SubResource("CircleShape2D_05wb2")
+
+[node name="Slime" type="Sprite2D" parent="Mobs/Area2D9" unique_id=517617677]
+scale = Vector2(0.42708334, 0.42708334)
+texture = ExtResource("9_sobj2")
+
+[node name="Area2D10" type="Area2D" parent="Mobs" unique_id=1049111641 node_paths=PackedStringArray("pathfinder")]
+position = Vector2(-1524, 920)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_ijb4o")
+pathfinder = NodePath("../../PathFinder/Path_engine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mobs/Area2D10" unique_id=1998844625]
+scale = Vector2(0.42708334, 0.42708334)
+shape = SubResource("CircleShape2D_05wb2")
+
+[node name="Slime" type="Sprite2D" parent="Mobs/Area2D10" unique_id=942001042]
+scale = Vector2(0.42708334, 0.42708334)
+texture = ExtResource("9_sobj2")
+
+[node name="Area2D11" type="Area2D" parent="Mobs" unique_id=748580469 node_paths=PackedStringArray("pathfinder")]
+position = Vector2(-2457, -1610)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_ijb4o")
+pathfinder = NodePath("../../PathFinder/Path_engine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mobs/Area2D11" unique_id=1181469057]
+scale = Vector2(0.42708334, 0.42708334)
+shape = SubResource("CircleShape2D_05wb2")
+
+[node name="Slime" type="Sprite2D" parent="Mobs/Area2D11" unique_id=673555231]
+scale = Vector2(0.42708334, 0.42708334)
+texture = ExtResource("9_sobj2")
+
+[node name="PathFinder" type="Node2D" parent="." unique_id=981905228 node_paths=PackedStringArray("pathfinder", "line2d", "timer")]
+script = ExtResource("10_2iw5d")
+pathfinder = NodePath("Path_engine")
+line2d = NodePath("Line2D")
+timer = NodePath("Timer")
+
+[node name="Path_engine" type="Node2D" parent="PathFinder" unique_id=1106584553 node_paths=PackedStringArray("tilemap", "player")]
+script = ExtResource("11_livfq")
+tilemap = NodePath("../../TileMapLayer")
+player = NodePath("../../Entidades/CharacterBody2D")
+
+[node name="Timer" type="Timer" parent="PathFinder" unique_id=1064689261]
+wait_time = 0.5
+autostart = true
+
+[node name="Line2D" type="Line2D" parent="PathFinder" unique_id=2016663961]
+width = 3.0
+script = ExtResource("12_3jxov")
+
+[connection signal="caminho_atualizado" from="PathFinder/Path_engine" to="PathFinder/Line2D" method="desenhar_caminho"]
+[connection signal="timeout" from="PathFinder/Timer" to="PathFinder/Path_engine" method="recalcular_rota"]
