@@ -51,8 +51,12 @@ func has_item(item: Item) -> bool:
 	return _find_slot(item) != -1
 
 func get_count(item: Item) -> int:
-	var idx: int = _find_slot(item)
-	return slots[idx]["count"] if idx != -1 else 0
+	# soma todas as pilhas do item (itens não-empilháveis ficam em vários slots)
+	var total: int = 0
+	for s in slots:
+		if s["item"].id == item.id:
+			total += int(s["count"])
+	return total
 
 # ---------------- ações no inventário ----------------
 func consume(index: int) -> bool:
