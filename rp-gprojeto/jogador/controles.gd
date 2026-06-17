@@ -1,4 +1,4 @@
-extends BaseCharacter
+extends CharacterBody2D
 
 const WALK_SPEED = 250.0
 const RUN_SPEED = 500.0
@@ -6,12 +6,6 @@ const RUN_SPEED = 500.0
 var facing_direction = Vector2.DOWN
 
 @onready var shapecast = $ShapeCast2D
-
-func _ready() -> void:
-	self.hp_max = self.get_CON() + floori(self.level*self.get_CON()/2.0)
-	self.hp_current = hp_max
-	self.mp_max = floori(self.get_ESP()/2.0) + floori(self.level*self.get_ESP()/4.0)
-	self.mp_current = mp_max
 
 func _physics_process(_delta):
 
