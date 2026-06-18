@@ -21,7 +21,7 @@ Game="*uid://db6ftun4vjjx4"
 Fade="*uid://nkjlryotnf8r"
 DialogueUI="*uid://cwtquivv6j7lr"
 Gamestate="*uid://kmqwxg0q1hiy"
-PlayerStatus="*uid://bc2pvwntof11n"
+PlayerData="*uid://bc2pvwntof11n"
 
 [display]
 

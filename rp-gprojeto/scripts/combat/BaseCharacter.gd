@@ -8,6 +8,21 @@ signal change_hp(character:BaseCharacter, new:int, old:int)
 signal change_mp(character:BaseCharacter, new:int, old:int)
 signal change_hp_max(character:BaseCharacter, new:int, old:int)
 signal change_mp_max(character:BaseCharacter, new:int, old:int)
+signal change_temp(character:BaseCharacter, attr:String, new:int, old:int)
+signal change_mod(character:BaseCharacter, attr:String, new:int, old:int)
+signal change_derivade(character:BaseCharacter)
+
+const ATTRIBUTES:PackedStringArray = [
+	"STR",
+	"DEX",
+	"CON",
+	"ESP",
+	"HP",
+	"MP",
+	"ACCURACY",
+	"RESISTANCE",
+	"INITIATIVE"
+]
 
 var _name:Array[String] = [""]
 @export var fullname:String:
@@ -39,44 +54,24 @@ var _STR:int
 @export_range(1, 30) var STR:int = 10:
 	get: return get_STR()
 	set(new): set_STR(new)
-var STR_mod:int = 0
-var STR_temp:int = 0
 var _DEX:int
 @export_range(1, 30) var DEX:int = 10:
 	get: return get_DEX()
 	set(new): set_DEX(new)
-var DEX_mod:int = 0
-var DEX_temp:int = 0
 var _CON:int
 @export_range(1, 30) var CON:int = 10:
 	get: return get_CON()
 	set(new): set_CON(new)
-var CON_mod:int = 0
-var CON_temp:int = 0
 var _ESP:int
 @export_range(1, 30) var ESP:int = 10:
 	get: return get_ESP()
 	set(new): set_ESP(new)
-var ESP_mod:int = 0
-var ESP_temp:int = 0
 
 @export_group("Vida e Mana")
 var _hp_max:int
 @export_range(1, 999) var hp_max:int = 10:
 	get: return get_hp_max()
 	set(new): push_warning("HpMAX é um atributo produto, portanto não pode ser definida")
-var _hp_max_mod:int=0
-var hp_max_mod:int:
-	get: return _hp_max_mod
-	set(new):
-		_hp_max_mod=new
-		set_hp_max()
-var _hp_max_temp:int=0
-var hp_max_temp:int:
-	get: return hp_max_temp
-	set(new):
-		_hp_max_temp=new
-		set_hp_max()
 var _hp_current:int=0
 @export var hp_current:int:
 	get: return get_hp_current()
@@ -85,46 +80,40 @@ var _mp_max:int
 @export_range(1, 999) var mp_max:int = 10:
 	get: return get_mp_max()
 	set(new): push_warning("MpMAX é um atributo produto, portanto não pode ser definida")
-var _mp_max_mod:int=0
-var mp_max_mod:int:
-	get: return _mp_max_mod
-	set(new):
-		_mp_max=new
-		set_mp_max()
-var _mp_max_temp:int=0
-var mp_max_temp:int:
-	get: return _mp_max_temp
-	set(new):
-		_mp_max_temp=new
-		set_mp_max()
+
 var _mp_current:int
 @export var mp_current:int:
 	get: return get_mp_current()
 	set(new): set_mp_current(new)
 
 var _accuracy:int
-var accuracy_mod:int
-var accuracy_temp:int
 var accuracy:int:
 	get: return get_accuracy()
 	set(new): push_warning("Accuracy é um atributo produto, portanto não pode ser definida")
 var _initiative:int
-var initiative_mod:int
-var initiative_temp:int
 var initiative_bonus:int:
 	get: return get_initiative()
 	set(new): push_warning("Accuracy é um atributo produto, portanto não pode ser definida")
 var _resistance:int
-var resistance_mod:int
-var resistance_temp:int
 var resistance:int:
 	get: return get_resistance()
 	set(new): push_warning("Accuracy é um atributo produto, portanto não pode ser definida")
+	
+var _attr_mod:Dictionary[String, int] = {}
+var _attr_temp:Dictionary[String, int] = {}
 	
 var armor:Item=null
 var weapon:Item=null
 var accesory1:Item=null
 var accesory2:Item=null
+
+func _ready() -> void:
+	for x in ATTRIBUTES:
+		self._attr_mod[x]=0
+		self._attr_temp[x]=0
+	self.set_all_derivative()
+	self.hp_current = hp_max
+	self.mp_current = mp_max
 
 func test_initiative() -> int:
 	return generic_roll("DEX")
@@ -137,7 +126,8 @@ func give_damage() -> int:
 func dodge() -> int:
 	return generic_roll("DEX")
 func defend():
-	resistance_temp=atribute_mod("CON") + self.level
+	var boon:int=max(atribute_mod("CON") + self.level, 1)
+	set_attr_temp("RESISTANCE", boon)
 func run():
 	return Dice.d100()
 func take_damage(damage:int) -> void:
@@ -161,31 +151,24 @@ func estoy_muerto() -> bool:
 		death.emit(self)
 		return true
 	return false
-func generic_roll(attr:String, prof_mod:bool=false, attr_mod:bool=true, temp_mod:bool=true) -> int:
-	var modifier:int = atribute_mod(attr, temp_mod, attr_mod)
+func generic_roll(attr:String, prof_mod:bool=false, attr_modb:bool=true, temp_modb:bool=true) -> int:
+	var modifier:int = atribute_mod(attr, temp_modb, attr_modb)
 	if prof_mod:
 		modifier+=level
 	return Dice.d10() + modifier
 	
 # resets
 
-func reset_temp()->void:
-	CON_temp=0
-	DEX_temp=0
-	ESP_temp=0
-	STR_temp=0
-	hp_max_temp=0
-	mp_max_temp=0
-	accuracy_temp=0
-	initiative_temp=0
-	resistance_temp=0
 func set_all_derivative()->void:
 	set_accuracy()
 	set_hp_max()
 	set_mp_max()
 	set_resistance()
 	set_initiative()
-#	Gets e Sets
+	change_derivade.emit(self)
+func _clear_temp():
+	for x in ATTRIBUTES:
+		_attr_temp[x]=0
 
 func get_fullname()->String: 
 	return " ".join(_name)
@@ -225,18 +208,18 @@ func set_level(novo)->void:
 func get_STR(temp:bool=true, mod:bool=true)->int:
 	var resul:int=_STR
 	if temp:
-		resul+=STR_temp
+		resul+=get_attr_temp("STR")
 	if mod:
-		resul+=STR_mod
+		resul+=get_attr_mod("STR")
 	return resul
 func set_STR(new):
 	_STR = max(1, min(30, new))
 func get_DEX(temp:bool=true, mod:bool=true)->int:
 	var resul:int=_DEX
 	if temp:
-		resul+=DEX_temp
+		resul+=get_attr_temp("DEX")
 	if mod:
-		resul+=DEX_mod
+		resul+=get_attr_mod("DEX")
 	return resul
 func set_DEX(new)->void:
 	_DEX = max(1, min(30, new))
@@ -244,9 +227,9 @@ func set_DEX(new)->void:
 func get_CON(temp:bool=true, mod:bool=true)->int:
 	var resul:int=_CON
 	if temp:
-		resul+=CON_temp
+		resul+=get_attr_temp("CON")
 	if mod:
-		resul+=CON_mod
+		resul+=get_attr_mod("CON")
 	return resul
 func set_CON(new)->void:
 	_CON = max(1, min(30, new))
@@ -254,9 +237,9 @@ func set_CON(new)->void:
 func get_ESP(temp:bool=true, mod:bool=true)->int:
 	var resul:int=_ESP
 	if temp:
-		resul+=ESP_temp
+		resul+=get_attr_temp("ESP")
 	if mod:
-		resul+=ESP_mod
+		resul+=get_attr_mod("ESP")
 	return resul
 func set_ESP(new)->void:
 	_ESP = max(1, min(30, new))
@@ -264,13 +247,15 @@ func set_ESP(new)->void:
 func get_hp_max(temp:bool=true, mod:bool=true)->int:
 	var resul:int=_hp_max
 	if temp:
-		resul+=hp_max_temp
+		resul+=_attr_temp["HP"]
 	if mod:
-		resul+=hp_max_mod
+		resul+=_attr_mod["HP"]
 	return max(resul, 1)
 func set_hp_max() -> void:
 	var old:int = get_hp_max()
 	var new:int = self.get_CON()+floori(self.level*self.get_CON()/2.0)
+	if new<_hp_current:
+		self._hp_current=new
 	change_hp_max.emit(self, new, old)
 	_hp_max=new
 func get_hp_current()->int:
@@ -284,13 +269,15 @@ func set_hp_current(value)->void:
 func get_mp_max(temp:bool=true, mod:bool=true)->int:
 	var resul:int=mp_max
 	if temp:
-		resul+=mp_max_temp
+		resul+=_attr_temp["MP"]
 	if mod:
-		resul+=mp_max_mod
+		resul+=_attr_mod["MP"]
 	return max(resul, 1)
 func set_mp_max() -> void:
 	var old:int = get_mp_max()
 	var new:int = floori(self.get_ESP()/2.0) + floori(self.level*self.get_ESP()/4.0)
+	if new<_mp_current:
+		self._mp_current=new
 	change_mp_max.emit(self, new, old)
 	self._mp_max = new
 func get_mp_current()->int:
@@ -303,27 +290,55 @@ func set_mp_current(value)->void:
 func get_accuracy(temp:bool=true, mod:bool=true)->int:
 	var resul:int=_accuracy
 	if temp:
-		resul+=accuracy_temp
+		resul+=get_attr_temp("ACCURACY")
 	if mod:
-		resul+=accuracy_mod
+		resul+=get_attr_mod("ACCURACY")
 	return resul
 func set_accuracy()->void:
 	_accuracy=atribute_mod("DEX")+get_level()
 func get_initiative(temp:bool=true, mod:bool=true)->int:
 	var resul:int=_initiative
 	if temp:
-		resul+=initiative_temp
+		resul+=get_attr_temp("INITIATIVE")
 	if mod:
-		resul+=initiative_mod
+		resul+=get_attr_mod("INITIATIVE")
 	return resul
 func set_initiative()->void:
 	_initiative=atribute_mod("DEX")
 func get_resistance(temp:bool=true, mod:bool=true)->int:
 	var resul:int=_resistance
 	if temp:
-		resul+=resistance_temp
+		resul+=get_attr_temp("RESISTANCE")
 	if mod:
-		resul+=resistance_mod
+		resul+=get_attr_mod("RESISTANCE")
 	return resul
 func set_resistance()->void:
 	_resistance=max(atribute_mod("CON"), 0)
+func get_attr_mod(attr:String)->int:
+	if _attr_mod.has(attr):
+		return _attr_mod[attr]
+	push_warning("Não existe esse atributo")
+	return -1
+func get_attr_temp(attr:String)->int:
+	if _attr_temp.has(attr):
+		return _attr_temp[attr]
+	push_warning("Não existe esse atributo")
+	return -1
+func set_attr_mod(attr:String, value:int)->void:
+	if _attr_mod.has(attr):
+		var old:int=_attr_mod[attr]
+		_attr_mod[attr]+=value
+		set_all_derivative()
+		var new:int=_attr_mod[attr]
+		change_mod.emit(self, attr, new, old)
+		return
+	push_warning("Não existe esse atributo")
+func set_attr_temp(attr:String, value:int)->void:
+	if _attr_temp.has(attr):
+		var old:int=_attr_temp[attr]
+		_attr_temp[attr]+=value
+		set_all_derivative()
+		var new:int=_attr_temp[attr]
+		change_temp.emit(self, attr, new, old)
+		return
+	push_warning("Não existe esse atributo")
