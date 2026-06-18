@@ -64,7 +64,7 @@ func _init(main_character:Playable, npcs:Array[BaseCharacter]) -> void:
 	var character:Array[BaseCharacter] = npcs
 	character.append(main_character)
 	for x in character:
-		dict_nodes[x.first_name] = CharacterNode.new(x, x.initiative())
+		dict_nodes[x.first_name] = CharacterNode.new(x, x.test_initiative())
 		self.add_node(dict_nodes[x.first_name])
 		node_count+=1
 	self.sort_initiative()
