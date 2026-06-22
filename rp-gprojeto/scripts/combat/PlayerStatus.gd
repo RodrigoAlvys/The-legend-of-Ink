@@ -1,6 +1,8 @@
-extends Playable
+extends BaseCharacter
+class_name Player
 
 func _ready() -> void:
+	self.playable=true
 	self.fullname = "Ink"
 	self.gender = "M"
 	self.level = 1

@@ -22,6 +22,8 @@ Fade="*uid://nkjlryotnf8r"
 DialogueUI="*uid://cwtquivv6j7lr"
 Gamestate="*uid://kmqwxg0q1hiy"
 PlayerData="*uid://bc2pvwntof11n"
+Enums="*uid://7qecb43d5u3d"
+Combat_Data="*uid://dv3yl0u3v5hne"
 
 [display]
 

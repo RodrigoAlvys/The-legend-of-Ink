@@ -1,7 +1,10 @@
 extends Node2D
 
-@onready var Player:BaseCharacter = PlayerStatus
-var enemies:Array[BaseCharacter] = []
+signal combat_end()
+
+var fighters:Array[BaseCharacter] = []
 var initiative:Initiative=null
 
-func 
+func combat_start(fighters_:Array[BaseCharacter])->void:
+	combat_end.emit()
+	fighters=fighters_

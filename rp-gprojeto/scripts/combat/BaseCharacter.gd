@@ -1,6 +1,6 @@
 #BaseCharacter
 # Classe abstrata
-extends Node2D
+extends Node
 class_name BaseCharacter
 
 signal death(character:BaseCharacter)
@@ -10,7 +10,8 @@ signal change_hp_max(character:BaseCharacter, new:int, old:int)
 signal change_mp_max(character:BaseCharacter, new:int, old:int)
 signal change_temp(character:BaseCharacter, attr:String, new:int, old:int)
 signal change_mod(character:BaseCharacter, attr:String, new:int, old:int)
-signal change_derivade(character:BaseCharacter)
+signal change_derivative(character:BaseCharacter)
+signal change_role(character:BaseCharacter, role:Enum.ROLE)
 
 const ATTRIBUTES:PackedStringArray = [
 	"STR",
@@ -21,9 +22,17 @@ const ATTRIBUTES:PackedStringArray = [
 	"MP",
 	"ACCURACY",
 	"RESISTANCE",
-	"INITIATIVE"
+	"INITIATIVE",
+	"DODGE"
 ]
 
+var _playable:bool=false
+var _hostile:bool=false
+var _friendly:bool=false
+var _role:Enum.ROLE
+var role:Enum.ROLE:
+	get: return get_role()
+	set(new): set_role(new)
 var _name:Array[String] = [""]
 @export var fullname:String:
 	get: return get_fullname()
@@ -93,11 +102,15 @@ var accuracy:int:
 var _initiative:int
 var initiative_bonus:int:
 	get: return get_initiative()
-	set(new): push_warning("Accuracy é um atributo produto, portanto não pode ser definida")
+	set(new): push_warning("Initiative é um atributo produto, portanto não pode ser definida")
 var _resistance:int
 var resistance:int:
 	get: return get_resistance()
-	set(new): push_warning("Accuracy é um atributo produto, portanto não pode ser definida")
+	set(new): push_warning("Resistance é um atributo produto, portanto não pode ser definida")
+var _dodge:int
+var dodge:int:
+	get: return get_dodge()
+	set(new): push_warning("Dodge é um atributo produto, portanto não pode ser definida")
 	
 var _attr_mod:Dictionary[String, int] = {}
 var _attr_temp:Dictionary[String, int] = {}
@@ -123,8 +136,8 @@ func give_damage() -> int:
 	if weapon:
 		pass
 	return max(Dice.d4() + atribute_mod("STR"), 1)
-func dodge() -> int:
-	return generic_roll("DEX")
+func dodging() -> int:
+	return self.dodge
 func defend():
 	var boon:int=max(atribute_mod("CON") + self.level, 1)
 	set_attr_temp("RESISTANCE", boon)
@@ -160,12 +173,13 @@ func generic_roll(attr:String, prof_mod:bool=false, attr_modb:bool=true, temp_mo
 # resets
 
 func set_all_derivative()->void:
-	set_accuracy()
 	set_hp_max()
 	set_mp_max()
+	set_accuracy()
 	set_resistance()
 	set_initiative()
-	change_derivade.emit(self)
+	set_dodge()
+	change_derivative.emit(self)
 func _clear_temp():
 	for x in ATTRIBUTES:
 		_attr_temp[x]=0
@@ -342,3 +356,47 @@ func set_attr_temp(attr:String, value:int)->void:
 		change_temp.emit(self, attr, new, old)
 		return
 	push_warning("Não existe esse atributo")
+func get_dodge(temp:bool=true, mod:bool=true)->int:
+	var resul:int=_dodge
+	if temp:
+		resul+=get_attr_temp("DODGE")
+	if mod:
+		resul+=get_attr_mod("DODGE")
+	return resul
+func set_dodge()->void:
+	self._dodge=atribute_mod("DEX")
+func set_role(role_:Enum.ROLE=Enum.ROLE.ALLY):
+	match role_:
+		Enum.ROLE.PLAYER:
+			_playable=true
+			_hostile=false
+			_friendly=false
+		Enum.ROLE.COMPANION:
+			_playable=true
+			_hostile=false
+			_friendly=true
+		Enum.ROLE.ENEMY:
+			_playable=false
+			_hostile=true
+			_friendly=false
+		Enum.ROLE.ALLY:
+			_playable=false
+			_hostile=false
+			_friendly=true
+		Enum.ROLE.NEUTRO:
+			_playable=false
+			_hostile=false
+			_friendly=false
+		_:
+			push_warning("Esse papel não existe")
+			return
+	change_role.emit(self, role_)
+	_role=role_
+func get_role()->Enum.ROLE:
+	return _role
+func is_playable()->bool:
+	return _playable
+func is_friendly()->bool:
+	return _friendly
+func is_hostile()->bool:
+	return _hostile

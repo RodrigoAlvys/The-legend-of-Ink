@@ -51,10 +51,9 @@ var point:NodeInitiative
 var aux_point:NodeInitiative
 var last:NodeInitiative
 var dict_nodes:Dictionary[String, NodeInitiative]
-var dict_character:Dictionary
 var node_count:int = 0
 var _duplicate:Dictionary[String, int]
-func _init(main_character:Playable, npcs:Array[BaseCharacter]) -> void:
+func _init(npcs:Array[BaseCharacter]) -> void:
 	dict_nodes["round_time"] = TimeNode.new("round_time", 0.0, 1)
 	point = dict_nodes["round_time"]
 	last = dict_nodes["round_time"]
@@ -62,7 +61,6 @@ func _init(main_character:Playable, npcs:Array[BaseCharacter]) -> void:
 	last.prev=last
 	node_count+=1
 	var character:Array[BaseCharacter] = npcs
-	character.append(main_character)
 	for x in character:
 		dict_nodes[x.first_name] = CharacterNode.new(x, x.test_initiative())
 		self.add_node(dict_nodes[x.first_name])
@@ -153,3 +151,24 @@ func add_to_dic(new:NodeInitiative)->void:
 		key = "%s_%d" % [new.nome, _duplicate[new.nome]]
 		new.dict_key=key
 	dict_nodes[key] = new
+func get_playable()->Array[CharacterNode]:
+	var list:Array[CharacterNode]=[]
+	for x in dict_nodes.values():
+		if x.is_class("CharacterNode"):
+			if x.character.is_playable():
+				list.append(x)
+	return list
+func get_hostile()->Array[CharacterNode]:
+	var list:Array[CharacterNode]=[]
+	for x in dict_nodes.values():
+		if x.is_class("CharacterNode"):
+			if x.character.is_hostile():
+				list.append(x)
+	return list
+func get_friendly()->Array[CharacterNode]:
+	var list:Array[CharacterNode]=[]
+	for x in dict_nodes.values():
+		if x.is_class("CharacterNode"):
+			if x.character.is_friendly():
+				list.append(x)
+	return list
